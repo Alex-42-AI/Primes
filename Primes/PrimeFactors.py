@@ -29,24 +29,20 @@ def factorize(N: int):
     else:
         if N < 2:
             raise ValueError('No...')
-    Prime, Res = True, ''
+    Prime = True
     for i in Primes_173467:
         if N in Primes_173467:
-            Res += str(N)
             if not Prime:
                 print(f'Found: {N} - once')
             break
         if not N % i:
-            Res += str(i)
             Prime, power = False, 0
             while not N % i:
                 N //= i
                 power += 1
             print(f'Found: {i} - {power} times' if power > 2 else (f'Found: {i} - twice' if power - 1 else f'Found: {i} - once'))
-            Res += str(power) * (power > 1)
         if i > N or N == 1:
             break
-    return int(Res)
 def gcf(p1: int, p2: int):
     p1, p2 = abs(p1), abs(p2)
     if 0 in [p1, p2]:
@@ -67,23 +63,4 @@ def scd(p1: int, p2: int):
     return p1_copy
 def mutually_prime(n1: int, n2: int):
     return gcf(n1, n2) == 1
-n = factorize(int(input()))
-while True:
-    print(n)
-    m, a = factorize(n), False
-    if n in Primes_173467:
-        a = True
-    if not a:
-        if prime(n):
-            a = True
-    if a:
-        m, b = int(str(n)[::-1]), False
-        if m in Primes_173467:
-            b = True
-        if not b:
-            if prime(m):
-                b = True
-        if b:
-            print(m)
-            break
-    n = m
+factorize(int(input()))
