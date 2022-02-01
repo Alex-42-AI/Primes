@@ -5,4 +5,5 @@ The things, that the other functions here do are to:
 2) find the greatest common factor of two numbers;
 3) find the smallest common divisor of two numbers;
 4) check whether two numbers are mutually prime.
+
 The variable Primes_173467 is a list of the first 173467 prime numbers. It is generated in advance.
