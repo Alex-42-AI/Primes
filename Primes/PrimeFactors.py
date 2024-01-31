@@ -45,22 +45,14 @@ def factorize(N: int):
             break
 def gcf(p1: int, p2: int):
     p1, p2 = abs(p1), abs(p2)
-    if 0 in [p1, p2]:
-        return [p1, p2][not p1]
-    while p1 - p2:
+    while p1 != p2 and p1 and p2:
         if p1 > p2:
-            p1 -= p2
+            p1 %= p2
         else:
-            p2 -= p1
-    return p1
-def scd(p1: int, p2: int):
-    p1_copy, p2_copy = abs(p1), abs(p2)
-    while p1_copy - p2_copy:
-        if p1_copy > p2_copy:
-            p2_copy += abs(p2)
-        else:
-            p1_copy += abs(p1)
-    return p1_copy
+            p2 %= p1
+    return (p1, p2)[not p1]
+def lcm(p1: int, p2: int):
+    return abs(p1 * p2) // gcf(p1, p2)
 def mutually_prime(n1: int, n2: int):
     return gcf(n1, n2) == 1
 factorize(int(input()))
