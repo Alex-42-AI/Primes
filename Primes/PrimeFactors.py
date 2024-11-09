@@ -1,5 +1,5 @@
 from math import floor, sqrt
-from Personal.Primes.PrimesList import Primes_173467
+from Primes.PrimesList import Primes_173467
 def prime(A: int):
     if A < 2 or A != 2 and not A % 2:
         return False
