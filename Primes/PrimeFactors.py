@@ -1,7 +1,7 @@
 from math import isqrt
 
 
-def prime(n: int):
+def prime(n: int) -> bool:
     if n < 2 or n != 2 and not n % 2:
         return False
 
@@ -55,12 +55,12 @@ def factorize(n: int) -> dict[int, int]:
             break
 
     if n > 1:
-        factors[n] = factors.get(n, 0) + 1
+        factors[n] = 1
 
     return factors
 
 
-def gcf(p1: int, p2: int):
+def gcf(p1: int, p2: int) -> int:
     p1, p2 = abs(p1), abs(p2)
 
     while p1 != p2 and p1 and p2:
@@ -73,11 +73,11 @@ def gcf(p1: int, p2: int):
     return (p1, p2)[not p1]
 
 
-def lcm(p1: int, p2: int):
+def lcm(p1: int, p2: int) -> int:
     return abs(p1 * p2) // gcf(p1, p2)
 
 
-def mutually_prime(n1: int, n2: int):
+def mutually_prime(n1: int, n2: int) -> bool:
     return gcf(n1, n2) == 1
 
 
