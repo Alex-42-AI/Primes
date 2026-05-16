@@ -1,36 +1,33 @@
-from math import sqrt
+from math import isqrt
 
 
 def prime(n: int):
     if n < 2 or n != 2 and not n % 2:
         return False
 
-    for i in range(3, int(sqrt(n)) + 1, 2):
+    for i in range(3, isqrt(n) + 1, 2):
         if not n % i:
             return False
 
     return True
 
 
-def sieve(n: int) -> set[int]:
+def sieve(n: int) -> list[int]:
     if n < 2:
-        return set()
+        return []
 
-    result, so_far, p = {2}, set(), 3
+    result, composite, p = [2], bytearray(n + 3), 3
 
     while p <= n:
-        result.add(p)
+        result.append(p)
 
         for i in range(p * p, n + 1, 2 * p):
-            so_far.add(i)
+            composite[i] = True
 
         p += 2
 
-        while p in so_far:
+        while composite[p]:
             p += 2
-
-        if p > n:
-            break
 
     return result
 
@@ -41,8 +38,8 @@ def factorize(n: int) -> dict[int, int]:
 
     factors = {}
 
-    for p in (primes := sieve(int(sqrt(n)))):
-        if n in primes:
+    for p in sieve(isqrt(n)):
+        if p * p > n:
             break
 
         power = 0
