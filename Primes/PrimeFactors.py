@@ -1,58 +1,98 @@
-from math import floor, sqrt
-from Primes.PrimesList import Primes_173467
-def prime(A: int):
-    if A < 2 or A != 2 and not A % 2:
+from math import sqrt
+
+
+def prime(n: int):
+    if n < 2 or n != 2 and not n % 2:
         return False
-    for I in range(3, floor(sqrt(A)) + 1, 2):
-        if not A % I:
+
+    for i in range(3, int(sqrt(n)) + 1, 2):
+        if not n % i:
             return False
+
     return True
-def factorize(N: int):
-    if N > 2358701:
-        p = None
-        for num in Primes_173467:
-            if not N % num:
-                p = num
-                break
-        if p is None:
-            num = 2358721
-            while p is None:
-                if not N % num:
-                    p = num
-                    break
-                num += 2
-                if num >= floor(sqrt(N)):
-                    return N
-        for i in range(2358721, N // p + 1, 2):
-            if prime(i):
-                Primes_173467.append(i)
-    else:
-        if N < 2:
-            raise ValueError('No...')
-    Prime = True
-    for i in Primes_173467:
-        if N in Primes_173467:
-            if not Prime:
-                print(f'Found: {N} - once')
+
+
+def sieve(n: int) -> set[int]:
+    if n < 2:
+        return set()
+
+    result, so_far, p = {2}, set(), 3
+
+    while p <= n:
+        result.add(p)
+
+        for i in range(p * p, n + 1, 2 * p):
+            so_far.add(i)
+
+        p += 2
+
+        while p in so_far:
+            p += 2
+
+        if p > n:
             break
-        if not N % i:
-            Prime, power = False, 0
-            while not N % i:
-                N //= i
-                power += 1
-            print(f'Found: {i} - {power} times' if power > 2 else (f'Found: {i} - twice' if power - 1 else f'Found: {i} - once'))
-        if i > N or N == 1:
+
+    return result
+
+
+def factorize(n: int) -> dict[int, int]:
+    if n < 1:
+        raise ValueError
+
+    factors = {}
+
+    for p in (primes := sieve(int(sqrt(n)))):
+        if n in primes:
             break
+
+        power = 0
+
+        while not n % p:
+            n //= p
+            power += 1
+
+        if power:
+            factors[p] = power
+
+        if n == 1:
+            break
+
+    if n > 1:
+        factors[n] = factors.get(n, 0) + 1
+
+    return factors
+
+
 def gcf(p1: int, p2: int):
     p1, p2 = abs(p1), abs(p2)
+
     while p1 != p2 and p1 and p2:
         if p1 > p2:
             p1 %= p2
+
         else:
             p2 %= p1
+
     return (p1, p2)[not p1]
+
+
 def lcm(p1: int, p2: int):
     return abs(p1 * p2) // gcf(p1, p2)
+
+
 def mutually_prime(n1: int, n2: int):
     return gcf(n1, n2) == 1
-factorize(int(input()))
+
+
+def product(factor_function: dict[int, int]) -> int:
+    p = 1
+
+    for k, v in factor_function.items():
+        if not prime(k):
+            print(factor_function)
+
+            raise ValueError
+
+        p *= k ** v
+
+    return p
