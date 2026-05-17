@@ -31,7 +31,6 @@ def sieve(n: int) -> list[int]:
 
     return result
 
-
 def factorize(n: int) -> dict[int, int]:
     if n < 1:
         raise ValueError
@@ -39,9 +38,6 @@ def factorize(n: int) -> dict[int, int]:
     factors = {}
 
     for p in sieve(isqrt(n)):
-        if p * p > n:
-            break
-
         power = 0
 
         while not n % p:
@@ -51,7 +47,7 @@ def factorize(n: int) -> dict[int, int]:
         if power:
             factors[p] = power
 
-        if n == 1:
+        if p * p > n:
             break
 
     if n > 1:
