@@ -31,6 +31,7 @@ def sieve(n: int) -> list[int]:
 
     return result
 
+
 def factorize(n: int) -> dict[int, int]:
     if n < 1:
         raise ValueError
